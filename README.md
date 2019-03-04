@@ -46,6 +46,10 @@ The following command both runs all the steps of the conan file, and publishes t
 | ------------- |:----------------- |:------------:|
 | shared      | False |  [True, False] |
 | fPIC      | True |  [True, False] |
+| xcb      | False |  [True, False] |
+
+**Notice:** `xcb` option set to `True` will pass `--enable-xcb` to the `configure`
+ script of cairo. You will need to also link with `xcb`(maybe even `xcb-shm`, `xcb-render`).
 
 ## Add Remote
 

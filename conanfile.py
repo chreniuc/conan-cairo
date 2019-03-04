@@ -17,8 +17,9 @@ class CairoConan(ConanFile):
     license = "GNU LGPL 2.1"
     exports = ["LICENSE.md"]
     settings = "os", "arch", "compiler", "build_type"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = "shared=False", "fPIC=True"
+    options = {"shared": [True, False], "fPIC": [True, False],
+        "xcb": [True, False]}
+    default_options = "shared=False", "fPIC=True", "xcb=False"
 
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
@@ -105,6 +106,8 @@ class CairoConan(ConanFile):
                 configure_args.extend(['--disable-static', '--enable-shared'])
             else:
                 configure_args.extend(['--enable-static', '--disable-shared'])
+            if self.options.xcb:
+                configure_args.extend(['--enable-xcb'])
 
             env_build = AutoToolsBuildEnvironment(self)
             if self.settings.os == 'Macos':
