@@ -30,6 +30,10 @@ class CairoConan(ConanFile):
         if self.settings.os == 'Windows':
             del self.options.fPIC
 
+    def requirements(self):
+        if self.options.xcb:
+            self.requires("xcb/1.13.1@chreniuc/stable")
+
     def build_requirements(self):
         if self.settings.os == 'Windows':
             self.build_requires('7z_installer/1.0@conan/stable')
@@ -97,6 +101,8 @@ class CairoConan(ConanFile):
             os.makedirs('pkgconfig')
             for lib in ['libpng', 'zlib', 'pixman']:
                 self.copy_pkg_config(lib)
+            if self.options.xcb:
+                self.copy_pkg_config('xcb')
 
             pkg_config_path = os.path.abspath('pkgconfig')
             pkg_config_path = tools.unix_path(pkg_config_path) if self.settings.os == 'Windows' else pkg_config_path
